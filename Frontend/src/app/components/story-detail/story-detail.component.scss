@@ -1,0 +1,227 @@
+// ── Decorative background keyframe ──────────────────────────────────────────
+@keyframes bgDrift {
+    0% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+
+    50% {
+        transform: translate(8px, -12px) rotate(1deg);
+    }
+
+    100% {
+        transform: translate(-6px, 6px) rotate(-0.5deg);
+    }
+}
+
+.detail-page {
+    position: relative;
+    min-height: 100vh;
+    background: var(--bg);
+    padding-bottom: 4rem;
+    overflow-x: hidden;
+
+    // ── Decorative tiled SVG background ──────────────────────────────────
+    &::before {
+        content: '';
+        position: fixed;
+        inset: -60px;
+        // SVG tile: stars ★, crescent moons ☽, 4-petal flowers, soft clouds
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3C!-- Stars --%3E%3Cpolygon transform='translate(40,45)' points='0,-11 3.2,-4.5 10.5,-3.4 5.3,1.7 6.5,9 0,5.5 -6.5,9 -5.3,1.7 -10.5,-3.4 -3.2,-4.5' fill='%23e5a225'/%3E%3Cpolygon transform='translate(330,90) scale(0.6)' points='0,-11 3.2,-4.5 10.5,-3.4 5.3,1.7 6.5,9 0,5.5 -6.5,9 -5.3,1.7 -10.5,-3.4 -3.2,-4.5' fill='%23e5a225'/%3E%3Cpolygon transform='translate(160,330) scale(0.75)' points='0,-11 3.2,-4.5 10.5,-3.4 5.3,1.7 6.5,9 0,5.5 -6.5,9 -5.3,1.7 -10.5,-3.4 -3.2,-4.5' fill='%23f5c842'/%3E%3Cpolygon transform='translate(200,160) scale(0.45)' points='0,-11 3.2,-4.5 10.5,-3.4 5.3,1.7 6.5,9 0,5.5 -6.5,9 -5.3,1.7 -10.5,-3.4 -3.2,-4.5' fill='%23e5a225'/%3E%3Cpolygon transform='translate(370,270) scale(0.65)' points='0,-11 3.2,-4.5 10.5,-3.4 5.3,1.7 6.5,9 0,5.5 -6.5,9 -5.3,1.7 -10.5,-3.4 -3.2,-4.5' fill='%23e5a225'/%3E%3Cpolygon transform='translate(80,195) scale(0.5)' points='0,-11 3.2,-4.5 10.5,-3.4 5.3,1.7 6.5,9 0,5.5 -6.5,9 -5.3,1.7 -10.5,-3.4 -3.2,-4.5' fill='%23f5c842'/%3E%3C!-- 4-petal flower 1 (pink) --%3E%3Ccircle cx='200' cy='55' r='6.5' fill='%23ffb3c6'/%3E%3Ccircle cx='200' cy='71' r='6.5' fill='%23ffb3c6'/%3E%3Ccircle cx='193' cy='63' r='6.5' fill='%23ffb3c6'/%3E%3Ccircle cx='207' cy='63' r='6.5' fill='%23ffb3c6'/%3E%3Ccircle cx='200' cy='63' r='5.5' fill='%23ffe168'/%3E%3C!-- 4-petal flower 2 (green) --%3E%3Ccircle cx='355' cy='190' r='5' fill='%23a8d8a8'/%3E%3Ccircle cx='355' cy='202' r='5' fill='%23a8d8a8'/%3E%3Ccircle cx='349' cy='196' r='5' fill='%23a8d8a8'/%3E%3Ccircle cx='361' cy='196' r='5' fill='%23a8d8a8'/%3E%3Ccircle cx='355' cy='196' r='4.5' fill='%23ffe168'/%3E%3C!-- 4-petal flower 3 (soft purple) --%3E%3Ccircle cx='55' cy='310' r='5.5' fill='%23d4b8e0'/%3E%3Ccircle cx='55' cy='323' r='5.5' fill='%23d4b8e0'/%3E%3Ccircle cx='49' cy='317' r='5.5' fill='%23d4b8e0'/%3E%3Ccircle cx='62' cy='317' r='5.5' fill='%23d4b8e0'/%3E%3Ccircle cx='55' cy='317' r='5' fill='%23ffe168'/%3E%3C!-- 4-petal flower 4 (pink) at bottom right --%3E%3Ccircle cx='305' cy='375' r='5' fill='%23ffb3c6'/%3E%3Ccircle cx='305' cy='387' r='5' fill='%23ffb3c6'/%3E%3Ccircle cx='299' cy='381' r='5' fill='%23ffb3c6'/%3E%3Ccircle cx='311' cy='381' r='5' fill='%23ffb3c6'/%3E%3Ccircle cx='305' cy='381' r='4.5' fill='%23ffe168'/%3E%3C!-- Crescent moon 1 --%3E%3Ccircle cx='285' cy='38' r='13' fill='%23c5b4e3'/%3E%3Ccircle cx='293' cy='34' r='11' fill='%23faf8f4'/%3E%3C!-- Crescent moon 2 (small) --%3E%3Ccircle cx='118' cy='370' r='10' fill='%23c5b4e3'/%3E%3Ccircle cx='125' cy='367' r='8.5' fill='%23faf8f4'/%3E%3C!-- Crescent moon 3 (tiny) --%3E%3Ccircle cx='22' cy='155' r='7' fill='%23b8d4c8'/%3E%3Ccircle cx='27' cy='153' r='6' fill='%23faf8f4'/%3E%3C!-- Cloud 1 --%3E%3Cellipse cx='245' cy='285' rx='22' ry='12' fill='%23cce7f5'/%3E%3Cellipse cx='261' cy='279' rx='15' ry='11' fill='%23cce7f5'/%3E%3Cellipse cx='230' cy='279' rx='13' ry='10' fill='%23cce7f5'/%3E%3C!-- Cloud 2 (small) --%3E%3Cellipse cx='95' cy='128' rx='17' ry='9' fill='%23cce7f5'/%3E%3Cellipse cx='108' cy='123' rx='12' ry='9' fill='%23cce7f5'/%3E%3Cellipse cx='83' cy='123' rx='11' ry='8' fill='%23cce7f5'/%3E%3C!-- Tiny dot accents --%3E%3Ccircle cx='175' cy='218' r='3.5' fill='%234f7942'/%3E%3Ccircle cx='310' cy='145' r='3' fill='%23e5a225'/%3E%3Ccircle cx='22' cy='72' r='2.5' fill='%23ffb3c6'/%3E%3Ccircle cx='385' cy='340' r='3' fill='%234f7942'/%3E%3Ccircle cx='135' cy='48' r='2.5' fill='%23c5b4e3'/%3E%3Ccircle cx='370' cy='48' r='2' fill='%23ff9eb5'/%3E%3Ccircle cx='260' cy='220' r='2.5' fill='%23c5b4e3'/%3E%3C/svg%3E");
+        background-size: 400px 400px;
+        opacity: 0.3;
+        pointer-events: none;
+        z-index: 0;
+        animation: bgDrift 22s ease-in-out infinite alternate;
+    }
+}
+
+.detail-loading,
+.detail-not-found {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.25rem;
+    min-height: 60vh;
+    color: var(--text-muted);
+    text-align: center;
+
+    &__icon {
+        font-size: 4rem;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+        color: var(--text-primary);
+        margin: 0;
+    }
+}
+
+.spinner {
+    width: 48px;
+    height: 48px;
+    border: 5px solid var(--border);
+    border-top-color: var(--primary);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.detail-article {
+    position: relative;
+    z-index: 1;
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+}
+
+// ── Back button ───────────────────────────────────────────────────────────────
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 700;
+    border-radius: 30px;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.15s;
+    min-height: 44px;
+    padding: 0 1.25rem;
+    cursor: pointer;
+    border: none;
+    font-family: inherit;
+    font-size: 0.9rem;
+
+    &--back {
+        background: var(--card-bg);
+        color: var(--primary);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+
+        &:hover {
+            background: var(--primary);
+            color: #fff;
+            transform: translateY(-1px);
+        }
+    }
+}
+
+
+
+// ── Language toggle ──────────────────────────────────────────────────────────
+.lang-toggle {
+    display: inline-flex;
+    background: var(--card-bg);
+    border-radius: 30px;
+    padding: 4px;
+    gap: 4px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    margin-top: 1.5rem;
+    margin-bottom: 1.25rem;
+
+    &__btn {
+        padding: 0.45rem 1.1rem;
+        border: none;
+        border-radius: 26px;
+        background: transparent;
+        font-family: inherit;
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: var(--text-muted);
+        cursor: pointer;
+        transition: background 0.2s, color 0.2s;
+        min-height: 44px;
+
+        &--active {
+            background: var(--primary);
+            color: #fff;
+        }
+
+        &:not(&--active):hover {
+            background: var(--border);
+            color: var(--text-primary);
+        }
+    }
+}
+
+// ── Title & Meta ─────────────────────────────────────────────────────────────
+.detail-title {
+    font-size: clamp(1.6rem, 4vw, 2.4rem);
+    font-weight: 800;
+    line-height: 1.2;
+    color: var(--text-primary);
+    margin: 0 0 1rem;
+}
+
+.detail-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-bottom: 1.75rem;
+
+    &__chip {
+        background: var(--chip-bg);
+        color: var(--text-muted);
+        font-size: 0.82rem;
+        font-weight: 600;
+        padding: 0.35rem 0.85rem;
+        border-radius: 30px;
+    }
+}
+
+
+
+// ── Story Illustrations ───────────────────────────────────────────────────────
+.story-illustrations {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.25rem;
+    margin-bottom: 2rem;
+    justify-content: center;
+
+    &__item {
+        flex: 1 1 260px;
+        max-width: 440px;
+        border-radius: 24px;
+        overflow: hidden;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+        background: var(--gradient-warm);
+    }
+
+    &__img {
+        width: 100%;
+        height: auto;
+        display: block;
+        transition: transform 0.35s ease;
+
+        &:hover {
+            transform: scale(1.03);
+        }
+    }
+
+    @media (max-width: 480px) {
+        &__item {
+            flex: 1 1 100%;
+            max-width: 100%;
+        }
+    }
+}
+
+// ── Story Content ─────────────────────────────────────────────────────────────
+.detail-content {
+    &__para {
+        font-size: clamp(1rem, 2.5vw, 1.15rem);
+        line-height: 1.85;
+        color: var(--text-secondary);
+        margin: 0 0 1.375rem;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+}

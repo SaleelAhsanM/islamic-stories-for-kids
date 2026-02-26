@@ -1,0 +1,123 @@
+/* ────────────────────────────────────────────────────────────
+   Islamic Stories for Kids — Global Styles
+   ──────────────────────────────────────────────────────────── */
+
+// ── Google Fonts (Nunito — kid-friendly rounded typeface) ─────
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap');
+
+// ── Design Tokens ──────────────────────────────────────────────
+:root {
+    // Brand colours
+    --primary: #4f7942; // Earthy green (Islamic)
+    --primary-dark: #3a5c30;
+    --primary-rgb: 79, 121, 66;
+    --accent: #e5a225; // Warm gold
+    --accent-light: #fde8a3;
+
+    // Backgrounds
+    --bg: #faf8f4; // Warm off-white
+    --card-bg: #ffffff;
+    --player-bg: #f0f5ee;
+    --chip-bg: #eef4ec;
+
+    // Text
+    --text-primary: #1e2a1c;
+    --text-secondary: #3a4a37;
+    --text-muted: #7a9070;
+
+    // UI
+    --border: #e3ece0;
+
+    // Gradients
+    --gradient-warm: linear-gradient(135deg, #fde8a3 0%, #c8e6bf 100%);
+}
+
+// ── Reset & Base ─────────────────────────────────────────────
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+}
+
+body {
+    font-family: 'Nunito', system-ui, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    background-color: var(--bg);
+    color: var(--text-primary);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    min-height: 100dvh;
+}
+
+// ── Typography ────────────────────────────────────────────────
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: 800;
+    line-height: 1.25;
+    color: var(--text-primary);
+}
+
+p {
+    line-height: 1.75;
+    color: var(--text-secondary);
+}
+
+a {
+    color: var(--primary);
+    text-decoration: none;
+
+    &:focus-visible {
+        outline: 3px solid var(--accent);
+        outline-offset: 3px;
+        border-radius: 4px;
+    }
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+// ── Accessibility ─────────────────────────────────────────────
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
+
+// ── Scrollbar (WebKit) ────────────────────────────────────────
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 8px;
+
+    &:hover {
+        background: var(--text-muted);
+    }
+}

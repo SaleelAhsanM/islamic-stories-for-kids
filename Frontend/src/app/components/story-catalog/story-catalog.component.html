@@ -1,0 +1,46 @@
+<!-- ── Full-page decorative background (scales as stories grow) ──────────── -->
+
+<div class="catalog-page">
+
+    <!-- ── Hero Section ───────────────────────────────────────────────────── -->
+    <header class="catalog-header">
+        <div class="catalog-header__content">
+            <div class="catalog-header__text">
+                <p class="catalog-header__eyebrow">📖 Stories for Every Age</p>
+                <h1 class="catalog-header__title">Islamic Stories<br><span>for Kids</span></h1>
+                <p class="catalog-header__subtitle">
+                    Beautiful tales of faith, kindness &amp; wonder —<br class="hide-mobile">
+                    in English &amp; Malayalam
+                </p>
+            </div>
+
+        </div>
+        <!-- Wavy bottom divider -->
+        <svg class="catalog-header__wave" viewBox="0 0 1440 60" preserveAspectRatio="none"
+            xmlns="http://www.w3.org/2000/svg">
+            <path d="M0,30 C360,60 1080,0 1440,30 L1440,60 L0,60 Z" fill="var(--bg)" />
+        </svg>
+    </header>
+
+    <!-- ── Story Grid ─────────────────────────────────────────────────────── -->
+    <main class="catalog-main">
+        @if (isLoading) {
+        <div class="catalog-loading">
+            <div class="spinner"></div>
+            <p>Loading stories…</p>
+        </div>
+        } @else if (stories.length === 0) {
+        <div class="catalog-empty">
+            <span>🌙</span>
+            <p>No stories yet. Check back soon!</p>
+        </div>
+        } @else {
+        <div class="catalog-grid">
+            @for (story of stories; track story.id) {
+            <app-story-card [story]="story" />
+            }
+        </div>
+        }
+    </main>
+
+</div>

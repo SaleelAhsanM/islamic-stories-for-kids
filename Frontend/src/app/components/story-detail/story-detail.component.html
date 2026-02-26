@@ -1,0 +1,71 @@
+<div class="detail-page">
+    @if (isLoading) {
+    <div class="detail-loading">
+        <div class="spinner"></div>
+        <p>Loading story…</p>
+    </div>
+    } @else if (!story) {
+    <div class="detail-not-found">
+        <span class="detail-not-found__icon">🌙</span>
+        <h2>Story not found</h2>
+        <a routerLink="/stories" class="btn btn--back">← Back to Stories</a>
+    </div>
+    } @else {
+    <article class="detail-article">
+
+        <!-- Back Nav -->
+        <a routerLink="/stories" class="btn btn--back">← All Stories</a>
+
+
+        <!-- Language Toggle -->
+        <div class="lang-toggle" role="group" aria-label="Select language">
+            <button class="lang-toggle__btn" [class.lang-toggle__btn--active]="currentLang === 'en'"
+                (click)="setLanguage('en')">
+                English
+            </button>
+            <button class="lang-toggle__btn" [class.lang-toggle__btn--active]="currentLang === 'ml'"
+                (click)="setLanguage('ml')">
+                മലയാളം
+            </button>
+        </div>
+
+        <!-- Title -->
+        <h1 class="detail-title">
+            {{ currentLang === 'en' ? story.title.en : story.title.ml }}
+        </h1>
+
+        <!-- Meta -->
+        <div class="detail-meta">
+
+            @if (story.ageGroup) {
+            <span class="detail-meta__chip">🎯 Ages {{ story.ageGroup }}</span>
+            }
+            @if (story.durationMinutes) {
+            <span class="detail-meta__chip">⏱ {{ story.durationMinutes }} min read</span>
+            }
+        </div>
+
+
+        <!-- Story Illustrations (inline generated images) -->
+        @if (story.storyImages && story.storyImages.length > 0) {
+        <div class="story-illustrations">
+            @for (img of story.storyImages; track img) {
+            <div class="story-illustrations__item">
+                <img [src]="img" [alt]="story.title.en + ' illustration'" class="story-illustrations__img"
+                    loading="lazy" />
+            </div>
+            }
+        </div>
+        }
+
+        <!-- Story Content -->
+        <div class="detail-content">
+            @for (paragraph of (currentLang === 'en' ? story.content.en : story.content.ml).split('\n\n'); track $index)
+            {
+            <p class="detail-content__para">{{ paragraph }}</p>
+            }
+        </div>
+
+    </article>
+    }
+</div>

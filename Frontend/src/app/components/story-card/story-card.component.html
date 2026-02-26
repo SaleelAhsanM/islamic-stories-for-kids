@@ -1,0 +1,24 @@
+<a [routerLink]="['/stories', story.id]" class="story-card" [attr.aria-label]="'Read ' + story.title.en">
+    <div class="story-card__image-wrap">
+        <img [src]="story.coverImageUrl" [alt]="story.title.en" class="story-card__image" loading="lazy" />
+        @if (story.ageGroup) {
+        <div class="story-card__badge">{{ story.ageGroup }} yrs</div>
+        }
+    </div>
+    <div class="story-card__body">
+        <h2 class="story-card__title-en">{{ story.title.en }}</h2>
+        <p class="story-card__title-ml">{{ story.title.ml }}</p>
+        @if (story.durationMinutes) {
+        <div class="story-card__footer">
+            <span class="story-card__duration">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10" />
+                    <polyline points="12 6 12 12 16 14" />
+                </svg>
+                {{ story.durationMinutes }} min
+            </span>
+            <span class="story-card__read-btn">Read &rarr;</span>
+        </div>
+        }
+    </div>
+</a>
