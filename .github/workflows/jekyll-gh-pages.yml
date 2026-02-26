@@ -41,7 +41,7 @@ jobs:
         uses: actions/configure-pages@v5
 
       - name: Debug dist folder
-        run: ls -R dist
+        run: ls
 
       - name: Debug Frontend/dist folder
         run: ls -R Frontend/dist
