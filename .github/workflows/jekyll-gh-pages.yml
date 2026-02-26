@@ -32,7 +32,7 @@ jobs:
         run: npm ci
 
       - name: Build Angular app
-        run: npm run build -- --configuration production --base-href /islamic-stories-for-kids/
+        run: npm run build -- --configuration production --base-href /islamic-stories-for-kids/Frontend/
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
