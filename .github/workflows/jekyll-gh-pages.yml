@@ -49,7 +49,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: Frontend/dist/islamic-stories-for-kids/browser
+          path: Frontend/dist/islamic-stories-frontend/browser
 
   deploy:
     runs-on: ubuntu-latest
