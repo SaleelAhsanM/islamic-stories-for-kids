@@ -6,7 +6,7 @@
   },
   "newProjectRoot": "projects",
   "projects": {
-    "islamic-stories-frontend": {
+    "islamic-stories-for-kids": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -83,10 +83,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "islamic-stories-frontend:build:production"
+              "buildTarget": "islamic-stories-for-kids:build:production"
             },
             "development": {
-              "buildTarget": "islamic-stories-frontend:build:development"
+              "buildTarget": "islamic-stories-for-kids:build:development"
             }
           },
           "defaultConfiguration": "development"
