@@ -34,7 +34,7 @@ jobs:
         working-directory: Frontend
 
       - name: Build Angular app
-        run: npm run build -- --configuration production --base-href /islamic-stories-for-kids/Frontend/
+        run: npm run build -- --configuration production --base-href /islamic-stories-for-kids/
         working-directory: Frontend
 
       - name: Setup Pages
