@@ -7,11 +7,15 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 import { Subscription, switchMap } from 'rxjs';
 import { StoryService } from '../../services/story.service';
 import { Story } from '../../models/story.model';
 
 type Language = 'en' | 'ml';
+
+const AUDIO_API_BASE =
+    'https://edj10kw0o2.execute-api.ap-south-1.amazonaws.com/audio';
 
 @Component({
     selector: 'app-story-detail',
@@ -25,8 +29,13 @@ export class StoryDetailComponent implements OnInit, OnDestroy {
 
     story: Story | undefined;
     isLoading = true;
-    isPlaying = false;
     currentLang: Language = 'en';
+
+    // ── Audio state ──────────────────────────────────
+    isPlaying = false;
+    audioUrl: string | null = null;
+    audioAvailable = false;
+    audioLoading = false;
     currentTime = 0;
     duration = 0;
     volume = 1;
@@ -35,7 +44,8 @@ export class StoryDetailComponent implements OnInit, OnDestroy {
 
     constructor(
         private route: ActivatedRoute,
-        private storyService: StoryService
+        private storyService: StoryService,
+        private http: HttpClient
     ) { }
 
     ngOnInit(): void {
@@ -50,6 +60,9 @@ export class StoryDetailComponent implements OnInit, OnDestroy {
                 next: (story) => {
                     this.story = story;
                     this.isLoading = false;
+                    if (story) {
+                        this.loadAudio();
+                    }
                 },
                 error: () => {
                     this.isLoading = false;
@@ -59,8 +72,71 @@ export class StoryDetailComponent implements OnInit, OnDestroy {
 
     ngOnDestroy(): void {
         this.sub.unsubscribe();
+        this.stopAudio();
     }
 
+    // ── Language ──────────────────────────────────────
+    setLanguage(lang: Language): void {
+        if (lang === this.currentLang) return;
+        this.currentLang = lang;
+        this.stopAudio();
+        this.loadAudio();
+    }
+
+    // ── Audio loading ────────────────────────────────
+    /**
+     * Fetches the audio URL from the API.
+     * Format: story-<id>-<lang>.mp3
+     * If the API fails or returns no data, audioAvailable stays false
+     * and the player is hidden.
+     */
+    private loadAudio(): void {
+        if (!this.story) return;
+
+        this.audioAvailable = false;
+        this.audioLoading = true;
+        this.audioUrl = null;
+        this.resetPlayerState();
+
+        const filename = `story-${this.story.id}-${this.currentLang}.mp3`;
+        const url = `${AUDIO_API_BASE}?filename=${encodeURIComponent(filename)}`;
+
+        this.http.get(url, { responseType: 'blob' }).subscribe({
+            next: (blob) => {
+                // Only treat as available if we actually got audio data
+                if (blob && blob.size > 0) {
+                    this.audioUrl = URL.createObjectURL(blob);
+                    this.audioAvailable = true;
+                }
+                this.audioLoading = false;
+            },
+            error: () => {
+                this.audioAvailable = false;
+                this.audioLoading = false;
+            },
+        });
+    }
+
+    private stopAudio(): void {
+        const audio = this.audioPlayer?.nativeElement;
+        if (audio) {
+            audio.pause();
+            audio.currentTime = 0;
+        }
+        // Revoke old blob URL to prevent memory leaks
+        if (this.audioUrl) {
+            URL.revokeObjectURL(this.audioUrl);
+        }
+        this.resetPlayerState();
+    }
+
+    private resetPlayerState(): void {
+        this.isPlaying = false;
+        this.currentTime = 0;
+        this.duration = 0;
+    }
+
+    // ── Player controls ──────────────────────────────
     togglePlay(): void {
         const audio = this.audioPlayer?.nativeElement;
         if (!audio) return;
@@ -110,10 +186,6 @@ export class StoryDetailComponent implements OnInit, OnDestroy {
         const m = Math.floor(seconds / 60);
         const s = Math.floor(seconds % 60);
         return `${m}:${s.toString().padStart(2, '0')}`;
-    }
-
-    setLanguage(lang: Language): void {
-        this.currentLang = lang;
     }
 
     get progressPercent(): number {

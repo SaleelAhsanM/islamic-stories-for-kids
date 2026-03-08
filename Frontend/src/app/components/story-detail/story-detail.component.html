@@ -45,6 +45,68 @@
             }
         </div>
 
+        <!-- Audio Player (only shown when audio is available) -->
+        @if (audioLoading) {
+        <div class="audio-player audio-player--loading">
+            <div class="spinner spinner--sm"></div>
+            <span>Loading audio…</span>
+        </div>
+        }
+        @if (audioAvailable && audioUrl) {
+        <div class="audio-player" aria-label="Story audio player">
+            <!-- Hidden native audio element -->
+            <audio #audioPlayer [src]="audioUrl"
+                (timeupdate)="onTimeUpdate($event)"
+                (loadedmetadata)="onLoadedMetadata($event)"
+                (ended)="onAudioEnded()"
+                preload="metadata"></audio>
+
+            <!-- Player UI -->
+            <div class="audio-player__inner">
+                <button class="audio-player__play-btn" (click)="togglePlay()"
+                    [attr.aria-label]="isPlaying ? 'Pause' : 'Play'">
+                    @if (isPlaying) {
+                    <!-- Pause icon -->
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+                        <rect x="6" y="4" width="4" height="16" rx="1" />
+                        <rect x="14" y="4" width="4" height="16" rx="1" />
+                    </svg>
+                    } @else {
+                    <!-- Play icon -->
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+                        <polygon points="5 3 19 12 5 21 5 3" />
+                    </svg>
+                    }
+                </button>
+
+                <div class="audio-player__timeline">
+                    <span class="audio-player__time">{{ formatTime(currentTime) }}</span>
+                    <div class="audio-player__progress-wrap">
+                        <input type="range" class="audio-player__seek"
+                            [min]="0" [max]="duration || 0"
+                            [value]="currentTime"
+                            (input)="seekTo($event)"
+                            aria-label="Seek" />
+                        <div class="audio-player__progress-fill" [style.width.%]="progressPercent"></div>
+                    </div>
+                    <span class="audio-player__time">{{ formatTime(duration) }}</span>
+                </div>
+
+                <div class="audio-player__volume">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+                        <path d="M19.07 4.93a10 10 0 0 1 0 14.14" />
+                        <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
+                    </svg>
+                    <input type="range" class="audio-player__volume-slider"
+                        min="0" max="1" step="0.05"
+                        [value]="volume"
+                        (input)="setVolume($event)"
+                        aria-label="Volume" />
+                </div>
+            </div>
+        </div>
+        }
 
         <!-- Story Illustrations (inline generated images) -->
         @if (story.storyImages && story.storyImages.length > 0) {
