@@ -1,0 +1,109 @@
+<div class="quran-page">
+
+    <!-- ── Hero Section ───────────────────────────────────────────────────── -->
+    <header class="quran-header">
+        <div class="quran-header__content">
+            <div class="quran-header__text">
+                <p class="quran-header__eyebrow">🕌 Juz 30 · Amma</p>
+                <h1 class="quran-header__title">Quran<br><span>for Kids</span></h1>
+                <p class="quran-header__subtitle">
+                    Listen &amp; learn Juz Amma with Sheikh Al-Minshawi —<br class="hide-mobile">
+                    child-friendly repeat recitation
+                </p>
+            </div>
+        </div>
+        <svg class="quran-header__wave" viewBox="0 0 1440 60" preserveAspectRatio="none"
+            xmlns="http://www.w3.org/2000/svg">
+            <path d="M0,30 C360,60 1080,0 1440,30 L1440,60 L0,60 Z" fill="var(--bg)" />
+        </svg>
+    </header>
+
+    <!-- ── Surah Grid ─────────────────────────────────────────────────────── -->
+    <main class="quran-main">
+        <div class="surah-grid">
+            @for (surah of surahs; track surah.number) {
+            <button class="surah-tile" [class.surah-tile--active]="currentSurah?.number === surah.number"
+                [class.surah-tile--playing]="currentSurah?.number === surah.number && isPlaying"
+                (click)="playSurah(surah)" [attr.aria-label]="'Play Surah ' + surah.name">
+                <span class="surah-tile__number">{{ surah.number }}</span>
+                <span class="surah-tile__name">{{ surah.name }}</span>
+                <span class="surah-tile__icon">
+                    @if (currentSurah?.number === surah.number && isLoading) {
+                    <span class="surah-tile__spinner"></span>
+                    } @else if (currentSurah?.number === surah.number && isPlaying) {
+                    <!-- Pause icon -->
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                        <rect x="6" y="4" width="4" height="16" rx="1" />
+                        <rect x="14" y="4" width="4" height="16" rx="1" />
+                    </svg>
+                    } @else {
+                    <!-- Play icon -->
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                        <polygon points="6,4 20,12 6,20" />
+                    </svg>
+                    }
+                </span>
+            </button>
+            }
+        </div>
+    </main>
+
+    <!-- ── Fixed Audio Player ─────────────────────────────────────────────── -->
+    @if (currentSurah) {
+    <div class="audio-player">
+        <div class="audio-player__inner">
+
+            <!-- Track info -->
+            <div class="audio-player__info">
+                <span class="audio-player__surah-number">{{ currentSurah.number }}</span>
+                <span class="audio-player__surah-name">{{ currentSurah.name }}</span>
+            </div>
+
+            <!-- Controls -->
+            <div class="audio-player__controls">
+                <button class="audio-player__btn" (click)="playPrevious()" aria-label="Previous surah">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                        <polygon points="19,20 9,12 19,4" />
+                        <rect x="5" y="4" width="3" height="16" rx="1" />
+                    </svg>
+                </button>
+
+                <button class="audio-player__btn audio-player__btn--main" (click)="togglePlayPause()"
+                    [attr.aria-label]="isPlaying ? 'Pause' : 'Play'">
+                    @if (isLoading) {
+                    <span class="audio-player__spinner"></span>
+                    } @else if (isPlaying) {
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                        <rect x="6" y="4" width="4" height="16" rx="1" />
+                        <rect x="14" y="4" width="4" height="16" rx="1" />
+                    </svg>
+                    } @else {
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                        <polygon points="6,4 20,12 6,20" />
+                    </svg>
+                    }
+                </button>
+
+                <button class="audio-player__btn" (click)="playNext()" aria-label="Next surah">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                        <polygon points="5,4 15,12 5,20" />
+                        <rect x="16" y="4" width="3" height="16" rx="1" />
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Progress -->
+            <div class="audio-player__progress-wrap">
+                <span class="audio-player__time">{{ formatTime(currentTime) }}</span>
+                <div class="audio-player__progress" #progressBar (click)="seek($event, progressBar)">
+                    <div class="audio-player__progress-fill"
+                        [style.width.%]="duration ? (currentTime / duration * 100) : 0"></div>
+                </div>
+                <span class="audio-player__time">{{ formatTime(duration) }}</span>
+            </div>
+
+        </div>
+    </div>
+    }
+
+</div>
